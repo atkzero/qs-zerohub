@@ -1,0 +1,52 @@
+import Quickshell
+import QtQuick
+import QtQuick.Effects
+import QtQuick.Layouts
+import Quickshell.Wayland
+import Quickshell.Hyprland
+import qs.widgets
+import qs.modules
+
+Scope {
+  id: bar
+  
+  property string fontFamily: "ComicShannsMono Nerd Font"
+  property int fontSize: 14
+  Variants {
+    model: Quickshell.screens
+
+    PanelWindow {
+      id: barbg
+      required property var modelData
+      screen: modelData
+
+      anchors {
+        top: true
+        left: true
+        right: true
+        bottom: true
+      }
+      margins {
+        right: 0
+        left: 0
+        top: 0
+        bottom: 0
+      }
+      color: "black"
+      
+      MultiEffect {
+        anchors.fill: parent
+        source: parent
+        maskEnabled: true
+        maskSource: Item {
+          width: barbg.width
+          height: barbg.height
+          layer.enabled: true
+          ClippingRect {
+            ShaderEffectSource content: shaderSource
+          }
+        }
+      }
+    }
+  }
+}
